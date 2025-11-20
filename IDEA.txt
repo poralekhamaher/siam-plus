@@ -1,0 +1,83 @@
+🔹 What Your App Will Do
+Core Features (MVP):
+Extract class routine from university’s system.
+Pull in old semester grades + course names.
+Auto-calculate remaining credits, completed credits, GPA progress.
+Show a clean dashboard with upcoming classes and deadlines.
+Future Add-Ons:
+RFID/Ultrasound attendance system: phones emit/receive sound frequencies for check-in.
+3D interactive campus map: helps new students navigate buildings.
+AR navigation: scan environment with phone camera → locate position in the 3D map.
+Moodle integration: direct assignment submissions, announcements, course materials.
+
+
+🔹 Tools & Languages You’ll Need
+📱 Frontend (App UI):
+React Native (best for iOS + Android cross-platform).
+Expo (optional, makes testing & deployment easier).
+Figma → UI design first, then translate into React Native components.
+⚙️ Backend (Data extraction + logic):
+Node.js + Express.js (for APIs).
+Database: PostgreSQL (structured, good for grades/credits) or MongoDB (flexible).
+Web scraping / API integration: If your university doesn’t give APIs, you may need scraping tools like Puppeteer (Node.js) or BeautifulSoup (Python).
+
+
+
+🔐 Auth:
+University login (OAuth2 / SSO) if available.
+Else, basic email/password for MVP.
+📡 Future Features (Add-ons):
+Ultrasound/RFID attendance → need sound-frequency SDKs (e.g., Google Nearby API, Chirp SDK).
+3D campus map → Unity/Three.js model integration inside React Native.
+AR navigation → ARCore (Android), ARKit (iOS), integrated via Expo AR modules.
+Moodle integration → Use Moodle REST API (already exists).
+☁️ Hosting / Deployment:
+Backend → Render, Heroku, or AWS.
+Database → Supabase (Postgres with auth), Firebase (alt).
+App → Play Store + App Store release via Expo EAS.
+
+
+
+
+⚡ My advice for roadmap:
+Phase 1: Focus only on routine + grades + credits + clean UI.
+Phase 2: Add Moodle integration.
+Phase 3: Explore attendance system + 3D/AR features.
+
+
+==================================================================
+
+
+For a beginner, a website-first approach is way easier than jumping straight into a mobile app. Since you already have hasanalmaher.com, you can:
+
+Why website first?
+Lower barrier → just HTML, CSS, JS (or React if you want interactive parts).
+
+Easier hosting → you already have hosting, no need for app store publishing.
+
+Scraping friendly → you can pull data from the university’s system into your site.
+
+Showcase ready → for your submission, you can say “Prototype website now, app next.”
+
+What you can do right now:
+Scrape class routine, grades, credits → display neatly on your site.
+
+Add sections like:
+
+✅ Current Semester Courses
+
+📊 Completed Courses & Credits
+
+📅 Today’s Classes
+
+Wrap it in a clean Figma-style UI (you can even make the site match your Figma design).
+
+Mention in your presentation: “Mobile app version under development” → that’ll impress them.
+
+Later (when you turn it into an app):
+You can reuse your website backend → just build a mobile front-end (React Native or Flutter).
+
+All logic/data is already handled → app is mostly UI.
+
+👉 So yes, do the website now as phase 1.
+App can be phase 2 in a few months.

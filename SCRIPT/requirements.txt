@@ -1,0 +1,5 @@
+# Requirements for Siam University Data Scraper
+requests>=2.28.0
+beautifulsoup4>=4.11.0
+selenium>=4.1.0
+webdriver-manager>=3.8.0

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIAM+ Student Dashboard</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="brand">
+        <div class="logo-dot"></div>
+        <div>
+          <p class="eyebrow">SIAM+</p>
+          <h1>Student Dashboard</h1>
+          <p class="subtitle">Your routine, grades, and progress in one place.</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="themeToggle" class="ghost-btn" aria-label="Toggle dark mode">🌙</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="grid two-col">
+        <article class="card" id="todayCard">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Today</p>
+              <h2>Today's Classes</h2>
+            </div>
+            <span class="pill pill-soft" id="todayLabel">--</span>
+          </div>
+          <div id="todayClasses" class="stack gap-sm"></div>
+        </article>
+
+        <article class="card" id="progressCard">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Progress</p>
+              <h2>Credits & GPA</h2>
+            </div>
+            <span class="pill pill-soft">Overview</span>
+          </div>
+          <div class="progress-content">
+            <div class="metric">
+              <p class="label">Completed Credits</p>
+              <p class="value" id="creditsCompleted">--</p>
+            </div>
+            <div class="metric">
+              <p class="label">Remaining</p>
+              <p class="value" id="creditsRemaining">--</p>
+            </div>
+            <div class="metric">
+              <p class="label">GPA</p>
+              <p class="value" id="gpaValue">--</p>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+            <p class="hint">Data is computed from schedule.json when available; otherwise uses placeholders.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Week</p>
+            <h2>Weekly Timetable</h2>
+          </div>
+          <p class="hint">Tap a day to see classes on mobile.</p>
+        </div>
+        <div id="weeklyTimetable" class="week-grid"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Courses</p>
+            <h2>Course List</h2>
+          </div>
+          <div class="search">
+            <input type="search" id="courseSearch" placeholder="Search by code or name" aria-label="Search courses" />
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="course-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Course</th>
+                <th>Term</th>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Room</th>
+                <th>Lecturer</th>
+                <th>Grade / Status</th>
+              </tr>
+            </thead>
+            <tbody id="courseList"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card error-card hidden" id="errorCard" role="alert">
+        <div class="card-header">
+          <h2>Unable to load schedule</h2>
+          <span class="pill pill-danger">Error</span>
+        </div>
+        <p id="errorMessage">Please check your connection or ensure schedule.json is present.</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
