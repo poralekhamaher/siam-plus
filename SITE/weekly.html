@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weekly Classes</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --primary: #ef476f;
+      --primary-soft: rgba(239, 71, 111, 0.12);
+      --border: #1f2937;
+      --shadow: 0 14px 38px rgba(0, 0, 0, 0.35);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 28px 12px 40px;
+    }
+
+    .app {
+      width: min(100%, 420px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .sub {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .day-strip {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .day-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 8px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .day-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .day-name {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .date-num {
+      display: block;
+      margin-top: 6px;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .today-badge {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .day-card.today {
+      background: var(--primary);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 12px 30px rgba(239, 71, 111, 0.35);
+    }
+
+    .day-card.today .day-name {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .day-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .day-card.today.selected {
+      background: linear-gradient(135deg, #ef476f, #ff7096);
+    }
+
+    .events {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .event-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      align-items: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .time {
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .title {
+      font-weight: 700;
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .empty {
+      margin: 0;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px dashed var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    @media (max-width: 540px) {
+      .day-strip { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Weekly Classes</h1>
+      <p class="sub">Tap a day to see what's on.</p>
+    </header>
+
+    <section class="day-strip" id="dayStrip" aria-label="Week day selector"></section>
+
+    <section class="events" id="eventList" aria-live="polite"></section>
+  </main>
+
+  <script>
+    const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    // Example schedule data; replace with real data as needed.
+    const eventsByDay = {
+      Mon: [
+        { time: "09:00 - 12:00", title: "Co-operative Education Preparation", type: "Lecture" },
+        { time: "13:00 - 16:00", title: "Business Process Management", type: "Lecture" },
+      ],
+      Tue: [
+        { time: "16:00 - 19:00", title: "Information Technology Project 1", type: "Lab" },
+      ],
+      Thu: [
+        { time: "09:00 - 12:00", title: "Advanced Computer Programming", type: "Lecture" },
+        { time: "13:00 - 16:00", title: "Information Technology Professional Communication", type: "Lecture" },
+      ],
+      Sat: [
+        { time: "09:00 - 12:00", title: "Art and Music Appreciation", type: "Lecture" },
+        { time: "13:00 - 16:00", title: "Website Design", type: "Lab" },
+      ],
+    };
+
+    const stripEl = document.getElementById("dayStrip");
+    const eventListEl = document.getElementById("eventList");
+
+    function startOfWeek(date) {
+      const d = new Date(date);
+      const offset = (d.getDay() + 6) % 7; // Monday start
+      d.setDate(d.getDate() - offset);
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }
+
+    function buildWeek() {
+      const today = new Date();
+      const monday = startOfWeek(today);
+      const days = DAY_ORDER.map((label, idx) => {
+        const date = new Date(monday);
+        date.setDate(monday.getDate() + idx);
+        return { label, date };
+      });
+
+      stripEl.innerHTML = "";
+      days.forEach(({ label, date }) => {
+        const isToday = date.toDateString() === today.toDateString();
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = `day-card${isToday ? " today selected" : ""}`;
+        card.dataset.day = label;
+        card.setAttribute("aria-pressed", isToday ? "true" : "false");
+        card.innerHTML = `
+          ${isToday ? '<span class="today-badge">TODAY</span>' : ""}
+          <span class="day-name">${label.toUpperCase()}</span>
+          <span class="date-num">${date.getDate()}</span>
+        `;
+        card.addEventListener("click", () => selectDay(label));
+        stripEl.appendChild(card);
+      });
+
+      selectDay(DAY_ORDER.find((d, i) => {
+        const date = new Date(monday);
+        date.setDate(monday.getDate() + i);
+        return date.toDateString() === today.toDateString();
+      }) || "Mon");
+    }
+
+    function selectDay(day) {
+      stripEl.querySelectorAll(".day-card").forEach((btn) => {
+        const isActive = btn.dataset.day === day;
+        btn.classList.toggle("selected", isActive);
+        btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+      });
+      renderEvents(day);
+    }
+
+    function renderEvents(day) {
+      const events = eventsByDay[day] || [];
+      eventListEl.innerHTML = "";
+      if (!events.length) {
+        eventListEl.innerHTML = `<p class="empty">No classes today 🎉</p>`;
+        return;
+      }
+
+      events.forEach((ev) => {
+        const row = document.createElement("div");
+        row.className = "event-row";
+        row.innerHTML = `
+          <div class="time">${ev.time || ""}</div>
+          <div>
+            <p class="title">${ev.title || ""}</p>
+            <p class="meta">${ev.type || "Class"}</p>
+          </div>
+        `;
+        eventListEl.appendChild(row);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", buildWeek);
+  </script>
+</body>
+</html>

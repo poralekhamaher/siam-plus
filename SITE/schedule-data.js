@@ -1,0 +1,419 @@
+window.EMBEDDED_SCHEDULE = {
+  "timetable": [
+    {
+      "day": "Mon",
+      "location": "Building 15 Room 201",
+      "course_name": "Co-operative Education Preparation",
+      "start_time": "09:00",
+      "end_time": "12:00",
+      "course_code": "190-400"
+    },
+    {
+      "day": "Mon",
+      "location": "Building 2 Room 308, 309",
+      "course_name": "Business Process Mangaement",
+      "start_time": "13:00",
+      "end_time": "16:00",
+      "course_code": "190-204"
+    },
+    {
+      "day": "Tue",
+      "location": "Building 2 Room 204",
+      "course_name": "Information Technology Project 1",
+      "start_time": "16:00",
+      "end_time": "19:00",
+      "course_code": "192-403"
+    },
+    {
+      "day": "Thu",
+      "location": "Building 3 Room 202",
+      "course_name": "Advanced Computer Programming",
+      "start_time": "09:00",
+      "end_time": "12:00",
+      "course_code": "192-201"
+    },
+    {
+      "day": "Thu",
+      "location": "Building 3 Room 202",
+      "course_name": "Information Technology Professional Communication",
+      "start_time": "13:00",
+      "end_time": "16:00",
+      "course_code": "190-303"
+    },
+    {
+      "day": "Sat",
+      "location": "Building 2 Room 208",
+      "course_name": "Art and Music Appreciation",
+      "start_time": "09:00",
+      "end_time": "12:00",
+      "course_code": "103-209"
+    },
+    {
+      "day": "Sat",
+      "location": "Building 2 Room 208",
+      "course_name": "Website Design",
+      "start_time": "13:00",
+      "end_time": "16:00",
+      "course_code": "192-438"
+    }
+  ],
+  "grades": [
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "101-304",
+      "coursename": "Logic and Design Thinking for Innovation and Start Up ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "101-307",
+      "coursename": "Information Technology ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-141",
+      "coursename": "English 1 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-142",
+      "coursename": "English 2 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-241",
+      "coursename": "English 3 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "190-104",
+      "coursename": "Computer Programming Concept ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "101-304",
+      "coursename": "Logic and Design Thinking for Innovation and Start Up ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "101-307",
+      "coursename": "Information Technology ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-141",
+      "coursename": "English 1 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-142",
+      "coursename": "English 2 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-241",
+      "coursename": "English 3 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "190-104",
+      "coursename": "Computer Programming Concept ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "101-304",
+      "coursename": "Logic and Design Thinking for Innovation and Start Up ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "101-307",
+      "coursename": "Information Technology ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-141",
+      "coursename": "English 1 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-142",
+      "coursename": "English 2 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "117-241",
+      "coursename": "English 3 ( T )",
+      "credit": "3",
+      "grade": "CS"
+    },
+    {
+      "section": "TRANSFER COURSE",
+      "coursecode": "190-104",
+      "coursename": "Computer Programming Concept ( T )",
+      "credit": "3",
+      "grade": "T"
+    },
+    {
+      "section": "SEMESTER 1/2023",
+      "coursecode": "117-191",
+      "coursename": "Thai Usage for Communication",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 1/2023",
+      "coursecode": "190-206",
+      "coursename": "Operating System and Architecture",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 1/2023",
+      "coursecode": "192-204",
+      "coursename": "Data Communication and Networking",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 1/2023",
+      "coursecode": "192-206",
+      "coursename": "Internet Programming",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 1/2023",
+      "coursecode": "192-422",
+      "coursename": "Network Security Technology",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 1/2023",
+      "coursecode": "192-461",
+      "coursename": "Introduction to Data Science",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2023",
+      "coursecode": "117-403",
+      "coursename": "English for Professional Purposes",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2023",
+      "coursecode": "121-103",
+      "coursename": "Life and Environment",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 2/2023",
+      "coursecode": "125-102",
+      "coursename": "Basic Mathematics",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 2/2023",
+      "coursecode": "190-302",
+      "coursename": "Information Technology Laws and Ethics",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2023",
+      "coursecode": "192-202",
+      "coursename": "Database Management",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 2/2023",
+      "coursecode": "192-301",
+      "coursename": "Human-Computer Interaction",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2023",
+      "coursecode": "192-428",
+      "coursename": "Information Systems Security",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 1/2024",
+      "coursecode": "117-501",
+      "coursename": "AI, Digital and Cyber Security in daily life",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 1/2024",
+      "coursecode": "117-502",
+      "coursename": "Digital Tools for Lifelong Learning",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 1/2024",
+      "coursecode": "126-316",
+      "coursename": "Statistics and Probability",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 1/2024",
+      "coursecode": "190-205",
+      "coursename": "Management Information Systems",
+      "credit": "3",
+      "grade": "B"
+    },
+    {
+      "section": "SEMESTER 1/2024",
+      "coursecode": "190-301",
+      "coursename": "Computer Project Management",
+      "credit": "3",
+      "grade": "B"
+    },
+    {
+      "section": "SEMESTER 1/2024",
+      "coursecode": "192-207",
+      "coursename": "Data Structures and Algorithms",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 2/2024",
+      "coursecode": "190-101",
+      "coursename": "Computer Network System",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2024",
+      "coursecode": "190-207",
+      "coursename": "Introduction to Business",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 2/2024",
+      "coursecode": "192-101",
+      "coursename": "Computer Programming",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2024",
+      "coursecode": "192-203",
+      "coursename": "Multimedia Design",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2024",
+      "coursecode": "192-205",
+      "coursename": "Information Systems Analysis and Design",
+      "credit": "3",
+      "grade": "B+"
+    },
+    {
+      "section": "SEMESTER 2/2024",
+      "coursecode": "192-463",
+      "coursename": "Machine Learning",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 2/2024",
+      "coursecode": "221-322",
+      "coursename": "Human Resource Management",
+      "credit": "3",
+      "grade": "A"
+    },
+    {
+      "section": "SEMESTER 1/2025",
+      "coursecode": "103-209",
+      "coursename": "Art and Music Appreciation",
+      "credit": "3",
+      "grade": "N/A"
+    },
+    {
+      "section": "SEMESTER 1/2025",
+      "coursecode": "190-204",
+      "coursename": "Business Process Mangaement",
+      "credit": "3",
+      "grade": ""
+    },
+    {
+      "section": "SEMESTER 1/2025",
+      "coursecode": "190-303",
+      "coursename": "Information Technology Professional Communication",
+      "credit": "3",
+      "grade": ""
+    },
+    {
+      "section": "SEMESTER 1/2025",
+      "coursecode": "190-400",
+      "coursename": "Co-operative Education Preparation",
+      "credit": "1",
+      "grade": ""
+    },
+    {
+      "section": "SEMESTER 1/2025",
+      "coursecode": "192-201",
+      "coursename": "Advanced Computer Programming",
+      "credit": "3",
+      "grade": ""
+    },
+    {
+      "section": "SEMESTER 1/2025",
+      "coursecode": "192-403",
+      "coursename": "Information Technology Project 1",
+      "credit": "3",
+      "grade": ""
+    },
+    {
+      "section": "SEMESTER 1/2025",
+      "coursecode": "192-438",
+      "coursename": "Website Design",
+      "credit": "3",
+      "grade": ""
+    }
+  ]
+};

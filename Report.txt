@@ -1,0 +1,239 @@
+1. Introduction
+The SIAM+ Dashboard began as a simple idea:
+a lightweight, student-friendly timetable and course viewer that works reliably on any device, loads instantly, and requires zero backend complexity.
+
+What started out as a plain HTML page evolved over multiple iterations into a polished, modern, responsive UI with:
+
+dynamic schedule rendering
+
+light/dark theme system
+
+weekly view with day-pills
+
+course search
+
+progress visualization
+
+fallback embedded data
+
+and even an inline mini-runner game integrated into the timetable card
+
+This document chronicles that evolution while also serving as a proper technical reference for anyone reviewing, grading, or potentially funding this project.
+
+2. Project Goals
+The objectives of SIAM+ are threefold:
+
+Usability — a dashboard that students can open quickly during a busy day.
+
+Clarity — simple structure, readable visual hierarchy, zero clutter.
+
+Reliability — data should load even when network conditions are bad.
+
+The system avoids unnecessary frameworks and complexity; everything runs on vanilla HTML, CSS, and JavaScript, with clean modularity and a predictable file structure.
+
+3. Architecture Overview
+Final project structure:
+
+/index.html        → main UI container
+/style.css         → light/dark theme tokens, layout, palette
+/app.js            → dynamic fetch + rendering logic
+/schedule-data.js  → embedded JSON fallback
+/schedule.json     → main schedule data (same-origin)
+Core Principles
+Static-only design: runs on GitHub Pages or any static server.
+
+Dynamic rendering: schedule.json is parsed client-side.
+
+Graceful fallback: if fetch fails, the dashboard auto-loads embedded data.
+
+Persistent theme: user preference saved in localStorage.
+
+Designed mobile-first: layout scales up from small screens.
+
+4. Evolution of Features (Commit-Driven Narrative)
+Phase 1 — Base UI & Data Rendering
+The earliest version implemented:
+
+single-page structure
+
+hero header
+
+today’s classes
+
+weekly timetable grid
+
+course list with search
+
+progress placeholder
+
+theme toggle
+
+schedule.json fetch
+
+This phase prioritized functionality and made sure the system could display all core student data.
+
+Phase 2 — Dark UI Stabilization & Data Fallback
+As the project matured, reliability became a priority:
+
+Dark mode became the default, but still toggleable.
+
+Weekly timetable moved to day-pill interactions instead of a rigid grid.
+
+Empty states were added (“no classes today”).
+
+Progress metrics were reorganized for clarity.
+
+schedule-data.js was introduced:
+
+A fully embedded JSON object
+
+Automatically used when remote fetch fails
+
+Ensures 100% data availability
+
+This phase made the dashboard feel stable and trustworthy.
+
+Phase 3 — UI Restyle, New Palette & Mini-Runner Game Integration
+This is the biggest transformation, shifting the dashboard into a polished, modern product.
+
+Key additions:
+
+1. New Color Token System
+A unified theme using:
+
+brand red
+
+gold
+
+plum
+
+These colors flow across:
+
+cards
+
+borders
+
+shadows
+
+text tones
+
+hero gradients
+
+active day pills
+
+mini-runner game assets
+
+This gave the app a consistent identity.
+
+2. Hero Parallax + Banner
+The hero section became visually distinct:
+
+fixed 140px header
+
+Siam banner PNG that extends above the header
+
+highest z-index so borders hide behind it
+
+smooth vertical parallax movement
+
+This effect makes the page feel premium without heavy JavaScript.
+
+3. Embedded Mini-Runner Game
+Inside the weekly timetable card:
+
+compact canvas
+
+start/play button
+
+collision detection
+
+increasing difficulty
+
+recolored runner + obstacles to match palette
+
+The game sits as an optional “student break” feature and also demonstrates creative UI embedding.
+
+4. Layout Polish
+Refinements across the interface include:
+
+softened card shadows
+
+compact search bar
+
+evenly spaced shortcuts
+
+consistent padding
+
+subtle transitions and hover states
+
+This phase represents the dashboard’s transition from functional to aesthetically refined.
+
+5. UI/UX Principles Behind the Current Design
+Mobile-first responsiveness
+Every element scales naturally down to small screens without breaking.
+
+Legible hierarchy
+Cards, headers, and pills follow a predictable structure.
+
+Zero visual clutter
+Instead of overloading, sections appear only when needed.
+
+“Calm design” philosophy
+Fonts, spacing, shadows, and gradients are all soft and welcoming.
+
+Instant value
+Users see:
+
+today’s classes
+
+weekly overview
+
+course list
+within seconds of loading the page.
+
+6. Data Handling Strategy
+Primary Source
+schedule.json fetched via fetch().
+
+Fallback Protection
+schedule-data.js contains a complete copy of the schedule.
+
+If fetch fails:
+
+the app logs the error
+
+automatically switches to embedded data
+
+renders everything normally
+
+This ensures high reliability even on unstable networks.
+
+7. Theme System
+A full light/dark theme implementation:
+
+Root-level CSS variables
+
+Persistent state via localStorage
+
+Toggle control in hero
+
+All cards and text colors react instantly on toggle
+
+The dark theme is visually dominant but optional.
+
+8. Game Integration Rationale
+Why add a game to a student dashboard?
+
+It increases engagement
+
+Shows creative technical ability
+
+Demonstrates canvas animations
+
+Adds personality to the project
+
+Makes the dashboard more memorable for evaluation panels
+
+Can be used as a micro-break tool during study sessions
+
+This is a UI feature, but also a showcase of coding capability.

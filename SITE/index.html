@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,29 +12,38 @@
   <div class="page">
     <header class="hero">
       <div class="brand">
-        <div class="logo-dot"></div>
+        <div class="logo-dot">
+          <img src="images/siam+_logo_small.png" alt="SIAM+ logo" class="logo-img" />
+        </div>
         <div>
           <p class="eyebrow">SIAM+</p>
           <h1>Student Dashboard</h1>
           <p class="subtitle">Your routine, grades, and progress in one place.</p>
         </div>
       </div>
-      <div class="actions">
-        <button id="themeToggle" class="ghost-btn" aria-label="Toggle dark mode">🌙</button>
+      <div class="hero-banner">
+        <img src="images/banner.png" alt="Banner" class="hero-banner-img" />
       </div>
-    </header>
+      </header>
 
     <main>
-      <section class="grid two-col">
-        <article class="card" id="todayCard">
+      <section class="top-grid">
+        <article class="card">
           <div class="card-header">
             <div>
-              <p class="eyebrow">Today</p>
-              <h2>Today's Classes</h2>
+              <p class="eyebrow">Schedule</p>
+              <h2>Weekly Timetable</h2>
             </div>
             <span class="pill pill-soft" id="todayLabel">--</span>
           </div>
-          <div id="todayClasses" class="stack gap-sm"></div>
+          <div class="week-wrapper">
+            <div id="dayStrip" class="day-pill-strip" aria-label="Week day selector"></div>
+            <div id="dayEvents" class="mobile-events"></div>
+          </div>
+          <div class="mini-game">
+            <canvas id="runnerGameSmall" width="700" height="140" aria-label="Mini runner game"></canvas>
+            <button id="gameStartBtnSmall" class="ghost-btn small-ghost game-btn-inline" type="button">Play</button>
+          </div>
         </article>
 
         <article class="card" id="progressCard">
@@ -45,36 +54,57 @@
             </div>
             <span class="pill pill-soft">Overview</span>
           </div>
-          <div class="progress-content">
-            <div class="metric">
-              <p class="label">Completed Credits</p>
-              <p class="value" id="creditsCompleted">--</p>
-            </div>
-            <div class="metric">
-              <p class="label">Remaining</p>
-              <p class="value" id="creditsRemaining">--</p>
-            </div>
-            <div class="metric">
-              <p class="label">GPA</p>
-              <p class="value" id="gpaValue">--</p>
-            </div>
-            <div class="progress-bar">
+            <div class="progress-content">
+              <div class="metric">
+                <p class="label">Completed Credits</p>
+                <p class="value" id="creditsCompleted">--</p>
+              </div>
+              <div class="metric">
+                <p class="label">Remaining</p>
+                <p class="value" id="creditsRemaining">--</p>
+              </div>
+              <div class="metric">
+                <p class="label">GPA</p>
+                <p class="value" id="gpaValue">--</p>
+              </div>
+              <div class="progress-bar">
               <div class="progress-fill" id="progressFill" style="width: 0%"></div>
             </div>
-            <p class="hint">Data is computed from schedule.json when available; otherwise uses placeholders.</p>
+            <div class="progress-actions" aria-label="Quick actions">
+              <button class="icon-btn" type="button" aria-label="Moodle" title="Moodle">
+                <img src="images/moodle.svg" alt="Moodle" class="icon-img" />
+              </button>
+              <button class="icon-btn" type="button" aria-label="GitHub" title="GitHub">
+                <img src="images/github.svg" alt="GitHub" class="icon-img" />
+              </button>
+              <button class="icon-btn" type="button" aria-label="Docs" title="Docs">
+                <img src="images/docs.svg" alt="Docs" class="icon-img" />
+              </button>
+              <button class="icon-btn" type="button" aria-label="ChatGPT" title="ChatGPT">
+                <img src="images/chatgpt.svg" alt="ChatGPT" class="icon-img chatgpt-icon" />
+              </button>
+              <button class="icon-btn theme-toggle" type="button" id="themeToggleIcon" aria-label="Toggle theme" title="Toggle theme" data-mode="dark">
+                <span class="sr-only">Toggle theme</span>
+                <svg class="theme-icon sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="5" />
+                  <g stroke-width="2" stroke-linecap="round">
+                    <line x1="12" y1="2" x2="12" y2="4" />
+                    <line x1="12" y1="20" x2="12" y2="22" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="2" y1="12" x2="4" y2="12" />
+                    <line x1="20" y1="12" x2="22" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                  </g>
+                </svg>
+                <svg class="theme-icon moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 12.5A9 9 0 0 1 11.5 3 7.5 7.5 0 1 0 21 12.5Z" />
+                </svg>
+              </button>
+            </div>
           </div>
         </article>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <p class="eyebrow">Week</p>
-            <h2>Weekly Timetable</h2>
-          </div>
-          <p class="hint">Tap a day to see classes on mobile.</p>
-        </div>
-        <div id="weeklyTimetable" class="week-grid"></div>
       </section>
 
       <section class="card">
@@ -94,11 +124,7 @@
                 <th>Code</th>
                 <th>Course</th>
                 <th>Term</th>
-                <th>Day</th>
-                <th>Time</th>
-                <th>Room</th>
-                <th>Lecturer</th>
-                <th>Grade / Status</th>
+                                <th>Grade / Status</th>
               </tr>
             </thead>
             <tbody id="courseList"></tbody>
@@ -116,6 +142,10 @@
     </main>
   </div>
 
+  <script src="schedule-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
+
+
+
