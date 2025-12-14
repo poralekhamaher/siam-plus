@@ -1,0 +1,7 @@
+{
+  "6605140007": {
+    "student_id": "6605140007",
+    "password_hash": "scrypt:32768:8:1$H9hBPKorZQjRepUk$a0036179137b61d06f68837b0a8bc2d610a92749c1dbe1f8c23642c136fa7e9840f9b78a4453f887efe1c971b1a5246d80ccd4f915b4fccfb5bb0f1eb5b02e9c",
+    "created_at": 1765074645.3617973
+  }
+}

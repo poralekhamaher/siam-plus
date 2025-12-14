@@ -1,0 +1,41 @@
+COURSE ID               COURSE NAME                             COURSE CREDIT           PENDING/GAINED/TRANSFERED 
+------------------------------------------------------------------------------------------------------------------
+101-304                 Logic and Design Thinking for Innovation3                       TRANSFERRED               
+101-307                 Information Technology ( T )            3                       TRANSFERRED               
+117-141                 English 1 ( T )                         3                       TRANSFERRED               
+117-142                 English 2 ( T )                         3                       TRANSFERRED               
+117-191                 Thai Usage for Communication            3                       GAINED                    
+117-241                 English 3 ( T )                         3                       TRANSFERRED               
+117-403                 English for Professional Purposes       3                       GAINED                    
+117-501                 AI, Digital and Cyber Security in daily 3                       GAINED                    
+117-502                 Digital Tools for Lifelong Learning     3                       GAINED                    
+121-103                 Life and Environment                    3                       GAINED                    
+125-102                 Basic Mathematics                       3                       GAINED                    
+126-316                 Statistics and Probability              3                       GAINED                    
+129-102                 Art and Music Appreciation              2                       PENDING                   
+190-101                 Computer Network System                 3                       GAINED                    
+190-104                 Computer Programming Concept ( T )      3                       TRANSFERRED               
+190-204                 Business Process Mangaement             3                       PENDING                   
+190-205                 Management Information Systems          3                       GAINED                    
+190-206                 Operating System and Architecture       3                       GAINED                    
+190-207                 Introduction to Business                3                       GAINED                    
+190-301                 Computer Project Management             3                       GAINED                    
+190-302                 Information Technology Laws and Ethics  3                       GAINED                    
+190-303                 Information Technology Professional Comm3                       PENDING                   
+190-400                 Co-operative Education Preparation      1                       PENDING                   
+192-101                 Computer Programming                    3                       GAINED                    
+192-201                 Advanced Computer Programming           3                       PENDING                   
+192-202                 Database Management                     3                       GAINED                    
+192-203                 Multimedia Design                       3                       GAINED                    
+192-204                 Data Communication and Networking       3                       GAINED                    
+192-205                 Information Systems Analysis and Design 3                       GAINED                    
+192-206                 Internet Programming                    3                       GAINED                    
+192-207                 Data Structures and Algorithms          3                       GAINED                    
+192-301                 Human-Computer Interaction              3                       GAINED                    
+192-403                 Information Technology Project 1        3                       PENDING                   
+192-422                 Network Security Technology             3                       GAINED                    
+192-428                 Information Systems Security            3                       GAINED                    
+192-438                 Website Design                          3                       PENDING                   
+192-461                 Introduction to Data Science            3                       GAINED                    
+192-463                 Machine Learning                        3                       GAINED                    
+221-322                 Human Resource Management               3                       GAINED                    

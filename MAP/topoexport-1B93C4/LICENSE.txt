@@ -1,0 +1,23 @@
+RESPONSIBILITIES
+We attach great importance to the quality and accuracy of the data we share. However, topoexport.com cannot be held responsible for any anomalies, inconsistencies, or inaccuracies found in the exported files. It is necessary for users to conduct rigorous data checks with surveyors before using them to avoid any errors, approximations, or inconsistencies.
+_____________________________
+
+LICENSES AND COPYRIGHTS
+
+The following licenses and copyrights apply to the various elements on our website:
+Front-end:
+    Interactive Map: Leaflet and OpenStreetMap contributions.
+
+Vectorial Sources
+  Trees Data: OpenStreetMap - Trees  (ODbL)
+  Buildings 3D Data: OpenStreetMap - Buildings  (ODbL)
+  Waterways Data: OpenStreetMap - Waterways  (ODbL)
+  Terrain Data: OpenGeoHub - Ensemble Digital Terrain Model (EDTM)  (CC BY 4.0 - Ho, Y.-F., Hengl, T., Parente, L., (2023). Ensemble Digital Terrain Model (EDTM) of the world (Version 1.1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.7676373)
+  Railways Data: OpenStreetMap - Railways  (ODbL)
+  Roads Data: OpenStreetMap - Roads  (ODbL)
+  Green Areas Data: OpenStreetMap - Green Area  (ODbL)
+
+Modeling Sources
+  Trees Data: OpenStreetMap - Trees  (ODbL)
+  Buildings 3D Data: OpenStreetMap - Buildings  (ODbL)
+  Terrain Data: OpenGeoHub - Ensemble Digital Terrain Model (EDTM)  (CC BY 4.0 - Ho, Y.-F., Hengl, T., Parente, L., (2023). Ensemble Digital Terrain Model (EDTM) of the world (Version 1.1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.7676373)

@@ -1,0 +1,19 @@
+{
+  "session_id": "RX4BR",
+  "course_id": "TEST101",
+  "course_title": "",
+  "course_code": "",
+  "section": "",
+  "teacher_id": "teacher",
+  "timestamp": "2025-12-08T19:29:24",
+  "current_code": "76952",
+  "code_issued_at": 1765222386.3494616,
+  "active": true,
+  "students": {
+    "6605140007": {
+      "name": "6605140007",
+      "status": "present",
+      "time": "02:31"
+    }
+  }
+}

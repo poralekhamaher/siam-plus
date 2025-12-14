@@ -1,0 +1,20 @@
+{
+  "session_id": "JDBZ2",
+  "course_id": "TEST101",
+  "course_title": "",
+  "course_code": "190-203",
+  "section": "B",
+  "teacher_id": "teacher",
+  "timestamp": "2025-12-08T18:11:30",
+  "current_code": "93624",
+  "code_issued_at": 1765217559.4576116,
+  "active": false,
+  "students": {
+    "6605140007": {
+      "name": "6605140007",
+      "status": "present",
+      "time": "01:12"
+    }
+  },
+  "stopped_at": "2025-12-08T18:12:46"
+}

@@ -528,6 +528,38 @@ def save_csv(rows: List[List[str]], path: str) -> None:
 def _normalize_code(code: str) -> str:
     return (code or "").upper().replace(" ", "").strip()
 
+
+def _dedupe_grades(grades: List[List[str]]) -> List[List[str]]:
+    """Deduplicate grades by course code and sanitize credit values."""
+    if not grades:
+        return []
+
+    header = grades[0]
+    out: List[List[str]] = [header]
+    seen = set()
+
+    for row in grades[1:]:
+        if len(row) < 5:
+            continue
+        code_raw = row[1].strip()
+        code_norm = _normalize_code(code_raw)
+        if not code_norm or code_norm in seen:
+            continue
+        seen.add(code_norm)
+
+        credit_raw = row[3].strip()
+        credit_digits = re.findall(r"\d+(?:\.\d+)?", credit_raw)
+        credit_clean = credit_digits[0] if credit_digits else credit_raw
+
+        out.append([
+            row[0],
+            code_raw,
+            row[2],
+            credit_clean,
+            row[4],
+        ])
+
+    return out
 650
 def merge_timetable_and_exams(timetable: List[List[str]], exams: List[List[str]]) -> List[List[str]]:
     """
@@ -611,6 +643,7 @@ def get_schedule_json(username: str, password: str, headless: bool = True) -> di
     creds = Credentials(username=username, password=password)
     flow = AxiomFlowToPython(creds=creds, headless=headless)
     timetable, grades = flow.run()
+    grades = _dedupe_grades(grades)
 
     def _rows_to_dicts(rows: list[list[str]]) -> list[dict]:
         if not rows:
@@ -653,6 +686,7 @@ if __name__ == "__main__":
     flow = AxiomFlowToPython(creds=creds, headless=headless)
     try:
         timetable, grades = flow.run()
+        grades = _dedupe_grades(grades)
         # Prepare JSON payload
         def _rows_to_dicts(rows: list[list[str]]) -> list[dict]:
             if not rows:

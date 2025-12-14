@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIAM+ Teacher Attendance</title>
+  <script>
+    (function () {
+      try {
+        const saved = localStorage.getItem("siam-theme");
+        const isDark = saved ? saved === "dark" : true;
+        if (isDark) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      } catch (e) {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+    (function () {
+      try {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+      } catch (_) {
+        /* ignore */
+      }
+      window.scrollTo(0, 0);
+      window.addEventListener("load", () => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        setTimeout(() => window.scrollTo(0, 0), 60);
+      });
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .code-display {
+      width: 100%;
+      font-size: clamp(48px, 9vw, 88px);
+      font-weight: 800;
+      text-align: center;
+      padding: 18px 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+      margin: 12px 0;
+      display: inline-flex;
+      justify-content: center;
+      gap: clamp(8px, 1vw, 14px);
+      letter-spacing: 0;
+      font-family: "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
+    }
+    .teacher-layout {
+      max-width: 1220px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .left-column,
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .theme-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px;
+    }
+    .theme-card h3 {
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .control-card { min-height: 320px; }
+    .checkins-card { min-height: 340px; }
+    .history-card { min-height: 0; }
+    .history-detail-card { min-height: 260px; }
+    .control-course-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .teacher-field {
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    }
+    @media (max-width: 960px) {
+      .teacher-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .control-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding-top: 16px;
+    }
+    .session-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .teacher-hero-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .checkin-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .checkin-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255,255,255,0.02);
+    }
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .history-item {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+    }
+    .history-item .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .history-item .title {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .history-item .badge {
+      justify-self: end;
+    }
+    .history-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .history-detail table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .history-detail th,
+    .history-detail td {
+      text-align: left;
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .history-detail th {
+      color: var(--muted);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+    }
+    #current-code span.code-placeholder {
+      opacity: 0.28;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="page">
+    <header class="hero">
+      <div class="brand">
+        <div class="logo-dot">
+          <img src="images/siam+_logo_small.png" alt="SIAM+ logo" class="logo-img" />
+        </div>
+        <div>
+          <p class="eyebrow">SIAM+</p>
+          <h1>Teacher Attendance</h1>
+          <p class="subtitle">Live codes and check-ins for {{ course_id }}.</p>
+        </div>
+      </div>
+      <div class="action-btns">
+        <button class="Btn" type="button" onclick="window.location.href='/logout'" aria-label="Logout">
+          <span class="sign">
+            <svg viewBox="0 0 512 512" aria-hidden="true">
+              <path d="M377.9 105.9 500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9-18.7 0-33.9-15.2-33.9-33.9V320h-128c-17.7 0-32-14.3-32-32v-64c0-17.7 14.3-32 32-32h128v-62.1c0-18.7 15.2-33.9 33.9-33.9 9 0 17.6 3.6 24 9.9zM160 96H96c-17.7 0-32 14.3-32 32v256c0 17.7 14.3 32 32 32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-53 0-96-43-96-96V128C0 75 43 32 96 32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+            </svg>
+          </span>
+          <span class="text">Logout</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="teacher-layout">
+        <div class="left-column">
+          <article class="card theme-card">
+            <div>
+              <h3>Theme</h3>
+              <p class="muted" style="margin:0;">Toggle light / dark</p>
+            </div>
+            <button class="icon-btn theme-toggle" type="button" id="themeToggleIcon" aria-label="Toggle theme" title="Toggle theme" data-mode="dark">
+              <span class="sr-only">Toggle theme</span>
+              <svg class="theme-icon sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" />
+                <path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" />
+                <path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" />
+                <path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" />
+                <path d="m19.07 4.93-1.41 1.41" />
+              </svg>
+              <svg class="theme-icon moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+              </svg>
+            </button>
+          </article>
+
+          <article class="card control-card">
+            <div class="card-header">
+              <div>
+                <p class="eyebrow">Control</p>
+                <h2>Attendance Session</h2>
+              </div>
+              <span class="pill pill-soft" id="session-pill">No session</span>
+            </div>
+
+            <div class="control-course-inputs">
+              <input type="text" id="courseCodeInput" class="session-code-field teacher-field" placeholder="Course code (e.g., IT101)" />
+              <input type="text" id="courseSectionInput" class="session-code-field teacher-field" placeholder="Section (e.g., B)" />
+            </div>
+
+            <div class="control-actions">
+              <button class="primary-btn" id="start-btn" type="button">Start attendance</button>
+            </div>
+
+            <p class="label" style="margin-top:16px;">Current code (auto-refreshes every 10s):</p>
+            <div id="current-code" class="code-display">
+              <span class="code-placeholder">-</span><span class="code-placeholder">-</span><span class="code-placeholder">-</span><span class="code-placeholder">-</span><span class="code-placeholder">-</span>
+            </div>
+            <p class="muted" id="session-info" style="margin: 4px 0 0;">&nbsp;</p>
+            <p class="note">Share this code with students. It updates automatically; students must submit the current code to be marked present.</p>
+          </article>
+
+          <article class="card history-card">
+            <div class="card-header">
+              <div>
+                <p class="eyebrow">Past</p>
+                <h2>Attendance History</h2>
+              </div>
+            </div>
+            <div id="history-list" class="history-list">
+              <p class="muted">No past sessions yet.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="right-column">
+          <article class="card checkins-card">
+            <div class="card-header">
+              <div>
+                <p class="eyebrow">Live</p>
+                <h2>Check-ins</h2>
+              </div>
+            </div>
+            <div id="student-list" class="checkin-list">
+              <p class="muted">No students have checked in yet.</p>
+            </div>
+          </article>
+
+          <article class="card history-detail-card">
+            <div class="card-header detail-header">
+              <div>
+                <p class="eyebrow">Detail</p>
+                <h2>Session Students</h2>
+                <p class="muted" id="history-detail-meta">&nbsp;</p>
+              </div>
+              <button class="pill pill-soft" id="courseGroupToggle" type="button">Download CSV</button>
+            </div>
+            <div id="history-detail" class="history-detail">
+              <p class="muted">Select a past session to view students.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    window.TEACHER_SESSION_ID = null;
+    window.SESSION_ID = null;
+    window.SELECTED_HISTORY_SESSION_ID = null;
+
+    function setActiveState(isActive) {
+      const btn = document.getElementById("start-btn");
+      if (!btn) return;
+      btn.textContent = isActive ? "Stop attendance" : "Start attendance";
+      btn.classList.toggle("danger", isActive);
+    }
+
+    function renderCodeDisplay(codeText) {
+      const codeEl = document.getElementById("current-code");
+      if (!codeEl) return;
+      const clean = (codeText || "-----").toString();
+      codeEl.innerHTML = "";
+      clean.split("").forEach((ch) => {
+        const span = document.createElement("span");
+        span.textContent = ch;
+        if (ch === "-") {
+          span.classList.add("code-placeholder");
+        }
+        codeEl.appendChild(span);
+      });
+    }
+
+    function resetSessionUI() {
+      const info = document.getElementById("session-info");
+      const pill = document.getElementById("session-pill");
+      renderCodeDisplay("-----");
+      if (info) info.textContent = "\u00a0";
+      if (pill) pill.textContent = "No session";
+      setActiveState(false);
+    }
+
+    async function startAttendance() {
+      const btn = document.getElementById("start-btn");
+      const info = document.getElementById("session-info");
+      const isStopping = btn && btn.classList.contains("danger");
+
+      if (isStopping) {
+        window.TEACHER_SESSION_ID = null;
+        window.SESSION_ID = null;
+        if (window.stopTeacherAttendancePolling) window.stopTeacherAttendancePolling();
+        const stopPayload = { session_id: document.getElementById("session-pill")?.textContent || window.SESSION_ID || "" };
+        try {
+          await fetch("/api/teacher/attendance/stop", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(stopPayload),
+          });
+        } catch (err) {
+          console.warn("Failed to stop session", err);
+        }
+        resetSessionUI();
+        fetchHistory();
+        return;
+      }
+
+      const courseTitle = "";
+      const courseCode = document.getElementById("courseCodeInput")?.value || "";
+      const courseSection = document.getElementById("courseSectionInput")?.value || "";
+
+      try {
+        const res = await fetch("/api/teacher/attendance/start", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            course_id: "{{ course_id }}",
+            course_title: courseTitle,
+            course_code: courseCode,
+            section: courseSection,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.session_id) {
+          alert(data && data.error ? data.error : "Failed to start session");
+          return;
+        }
+        window.TEACHER_SESSION_ID = data.session_id;
+        window.SESSION_ID = data.session_id;
+        if (info) info.textContent = "\u00a0";
+        const pill = document.getElementById("session-pill");
+        if (pill) pill.textContent = data.session_id;
+        renderCodeDisplay(data.current_code || "-----");
+
+        setActiveState(true);
+        if (window.startTeacherAttendancePolling) {
+          window.startTeacherAttendancePolling(window.SESSION_ID);
+        }
+        fetchHistory();
+      } catch (err) {
+        console.error("Failed to start attendance", err);
+        alert("Failed to start session");
+        if (info) info.textContent = "Unable to start session.";
+      }
+    }
+
+    function renderStudentList(students) {
+      const container = document.getElementById("student-list");
+      if (!container) return;
+
+      if (!students || !students.length) {
+        container.innerHTML = '<p class="muted">No students have checked in yet.</p>';
+        return;
+      }
+
+      const rows = students
+        .map(
+          (s) => `
+        <div class="checkin-card">
+          <span class="label">ID</span>
+          <p class="value">${s.id}</p>
+          <span class="label">Name</span>
+          <p class="value">${s.name || ""}</p>
+          <span class="label">Status</span>
+          <p class="value">${s.status || "pending"}</p>
+          <span class="label">Time</span>
+          <p class="value">${s.time || ""}</p>
+        </div>
+      `
+        )
+        .join("");
+
+      container.innerHTML = rows;
+    }
+
+    function handleTeacherStatus(data) {
+      if (data && data.current_code) {
+        renderCodeDisplay(data.current_code);
+      }
+      if (data && data.session_id) {
+        const pill = document.getElementById("session-pill");
+        if (pill) pill.textContent = data.session_id;
+        const info = document.getElementById("session-info");
+        if (info) info.textContent = "\u00a0";
+      }
+      if (data && Array.isArray(data.students)) {
+        renderStudentList(data.students);
+      }
+    }
+
+    async function fetchHistory() {
+      try {
+        const res = await fetch("/api/teacher/attendance/history");
+        const data = await res.json();
+        if (!data.ok || !Array.isArray(data.history)) return;
+        renderHistory(data.history);
+      } catch (err) {
+        console.warn("Failed to load history", err);
+      }
+    }
+
+    function renderHistory(items) {
+      const container = document.getElementById("history-list");
+      if (!container) return;
+      if (!items.length) {
+        container.innerHTML = '<p class="muted">No past sessions yet.</p>';
+        return;
+      }
+      const formatTs = (v) => (typeof v === "string" ? v.replace("T", "    T") : "");
+      const rows = items
+        .map((item) => {
+          const fullLabel = [item.course_code, item.section].filter(Boolean).join(" ").trim();
+          const title = item.course_title || fullLabel || item.session_id;
+          const stopped = formatTs(item.stopped_at || item.timestamp || "");
+          const count = item.students ? Object.keys(item.students).length : 0;
+          return `
+          <button class="history-item" type="button" data-session-id="${item.session_id || ""}">
+            <div class="meta">
+              <span class="title">${title || "Session"}</span>
+              <span>${stopped}</span>
+            </div>
+            <span class="badge pill pill-soft">${count} students</span>
+          </button>`;
+        })
+        .join("");
+      container.innerHTML = rows;
+
+      container.querySelectorAll(".history-item").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const sid = btn.dataset.sessionId || "";
+          if (sid) {
+            fetchHistoryDetail(sid);
+            window.SELECTED_HISTORY_SESSION_ID = sid;
+          }
+        });
+      });
+    }
+
+    async function fetchHistoryDetail(sessionId) {
+      const detailEl = document.getElementById("history-detail");
+      if (detailEl) detailEl.innerHTML = '<p class="muted">Loading...</p>';
+      try {
+        const res = await fetch(`/api/teacher/attendance/history/${encodeURIComponent(sessionId)}`);
+        const data = await res.json();
+        if (!data.ok) {
+          if (detailEl) detailEl.innerHTML = `<p class="muted">${data.error || "Unable to load session."}</p>`;
+          return;
+        }
+        renderHistoryDetail(data);
+        window.SELECTED_HISTORY_SESSION_ID = sessionId;
+      } catch (err) {
+        console.warn("Failed to load history detail", err);
+        if (detailEl) detailEl.innerHTML = '<p class="muted">Unable to load session.</p>';
+      }
+    }
+
+    function renderHistoryDetail(data) {
+      const detailEl = document.getElementById("history-detail");
+      const metaEl = document.getElementById("history-detail-meta");
+      if (!detailEl) return;
+      const students = Array.isArray(data.students) ? data.students : [];
+      if (metaEl) {
+        const formatTs = (v) => (typeof v === "string" ? v.replace("T", "    T") : "");
+        const parts = [];
+        if (data.course_code) parts.push(data.course_code);
+        if (data.section) parts.push(`Section ${data.section}`);
+        if (data.stopped_at) parts.push(formatTs(data.stopped_at));
+        else if (data.timestamp) parts.push(formatTs(data.timestamp));
+        metaEl.textContent = parts.join(" · ") || "\u00a0";
+      }
+      if (!students.length) {
+        detailEl.innerHTML = "<p class=\"muted\">No students recorded for this session.</p>";
+        return;
+      }
+      const rows = students
+        .map(
+          (s) => `<tr><td>${s.id}</td><td>${s.name || ""}</td><td>${s.status || ""}</td><td>${s.time || ""}</td></tr>`
+        )
+        .join("");
+      detailEl.innerHTML = `
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Time</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    async function exportSelectedHistory() {
+      const sessionId = window.SELECTED_HISTORY_SESSION_ID;
+      if (!sessionId) {
+        alert("Select a session first.");
+        return;
+      }
+      try {
+        const res = await fetch(`/api/teacher/attendance/history/${encodeURIComponent(sessionId)}/export`);
+        if (!res.ok) {
+          let msg = "Unable to export session.";
+          try {
+            const data = await res.json();
+            if (data && data.error) msg = data.error;
+          } catch (_) {
+            /* ignore */
+          }
+          alert(msg);
+          return;
+        }
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `attendance_${sessionId}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        console.warn("Export failed", err);
+        alert("Unable to export session.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const startBtn = document.getElementById("start-btn");
+      if (startBtn) {
+        startBtn.addEventListener("click", startAttendance);
+      }
+      const exportBtn = document.getElementById("courseGroupToggle");
+      if (exportBtn) {
+        exportBtn.addEventListener("click", exportSelectedHistory);
+      }
+      fetchHistory();
+    });
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>

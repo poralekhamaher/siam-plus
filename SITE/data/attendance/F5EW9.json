@@ -1,0 +1,14 @@
+{
+  "session_id": "F5EW9",
+  "course_id": "TEST101",
+  "course_title": "",
+  "course_code": "",
+  "section": "",
+  "teacher_id": "teacher",
+  "timestamp": "2025-12-08T20:18:25",
+  "current_code": "11188",
+  "code_issued_at": 1765225105.266096,
+  "active": false,
+  "students": {},
+  "stopped_at": "2025-12-08T20:18:35"
+}

@@ -1,15 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIAM+ Student Dashboard</title>
+  <script>
+    (function () {
+      try {
+        const saved = localStorage.getItem("siam-theme");
+        const isDark = saved ? saved === "dark" : true;
+        if (isDark) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      } catch (e) {
+        document.documentElement.classList.add("dark");
+      }
+    })();
+    (function () {
+      try {
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
+        }
+      } catch (_) {
+        /* ignore */
+      }
+      window.scrollTo(0, 0);
+      window.addEventListener("load", () => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        setTimeout(() => window.scrollTo(0, 0), 60);
+      });
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="dark">
   <div class="page">
+    <input type="checkbox" id="menuToggle" class="menu-toggle-checkbox" aria-hidden="true" />
     <header class="hero">
       <div class="brand">
         <div class="logo-dot">
@@ -21,10 +51,22 @@
           <p class="subtitle">Your routine, grades, and progress in one place.</p>
         </div>
       </div>
-      <div class="hero-banner">
-        <img src="images/banner.png" alt="Banner" class="hero-banner-img" />
+      <div class="action-btns">
+        <button class="Btn" type="button" onclick="window.location.href='/logout'" aria-label="Logout">
+          <span class="sign">
+            <svg viewBox="0 0 512 512" aria-hidden="true">
+              <path d="M377.9 105.9 500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9-18.7 0-33.9-15.2-33.9-33.9V320h-128c-17.7 0-32-14.3-32-32v-64c0-17.7 14.3-32 32-32h128v-62.1c0-18.7 15.2-33.9 33.9-33.9 9 0 17.6 3.6 24 9.9zM160 96H96c-17.7 0-32 14.3-32 32v256c0 17.7 14.3 32 32 32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-53 0-96-43-96-96V128C0 75 43 32 96 32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+            </svg>
+          </span>
+          <span class="text">Logout</span>
+        </button>
       </div>
-      </header>
+      <label class="toggle mobile-menu-toggle" for="menuToggle" aria-label="Open menu">
+        <div id="bar1" class="bars"></div>
+        <div id="bar2" class="bars"></div>
+        <div id="bar3" class="bars"></div>
+      </label>
+    </header>
 
     <main>
       <section class="top-grid">
@@ -54,20 +96,20 @@
             </div>
             <span class="pill pill-soft">Overview</span>
           </div>
-            <div class="progress-content">
-              <div class="metric">
-                <p class="label">Completed Credits</p>
-                <p class="value" id="creditsCompleted">--</p>
-              </div>
-              <div class="metric">
-                <p class="label">Remaining</p>
-                <p class="value" id="creditsRemaining">--</p>
-              </div>
-              <div class="metric">
-                <p class="label">GPA</p>
-                <p class="value" id="gpaValue">--</p>
-              </div>
-              <div class="progress-bar">
+          <div class="progress-content">
+            <div class="metric">
+              <p class="label">Completed Credits</p>
+              <p class="value" id="creditsCompleted">--</p>
+            </div>
+            <div class="metric">
+              <p class="label">Remaining</p>
+              <p class="value" id="creditsRemaining">--</p>
+            </div>
+            <div class="metric">
+              <p class="label">GPA</p>
+              <p class="value" id="gpaValue">--</p>
+            </div>
+            <div class="progress-bar">
               <div class="progress-fill" id="progressFill" style="width: 0%"></div>
             </div>
             <div class="progress-actions" aria-label="Quick actions">
@@ -75,7 +117,7 @@
                 <img src="images/moodle.svg" alt="Moodle" class="icon-img" />
               </button>
               <button class="icon-btn" type="button" aria-label="GitHub" title="GitHub">
-                <img src="images/github.svg" alt="GitHub" class="icon-img" />
+                <img src="images/github.svg" alt="GitHub" class="icon-img github-icon" />
               </button>
               <button class="icon-btn" type="button" aria-label="Docs" title="Docs">
                 <img src="images/docs.svg" alt="Docs" class="icon-img" />
@@ -86,21 +128,209 @@
               <button class="icon-btn theme-toggle" type="button" id="themeToggleIcon" aria-label="Toggle theme" title="Toggle theme" data-mode="dark">
                 <span class="sr-only">Toggle theme</span>
                 <svg class="theme-icon sun-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="5" />
-                  <g stroke-width="2" stroke-linecap="round">
-                    <line x1="12" y1="2" x2="12" y2="4" />
-                    <line x1="12" y1="20" x2="12" y2="22" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="2" y1="12" x2="4" y2="12" />
-                    <line x1="20" y1="12" x2="22" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                  </g>
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2" />
+                  <path d="M12 20v2" />
+                  <path d="m4.93 4.93 1.41 1.41" />
+                  <path d="m17.66 17.66 1.41 1.41" />
+                  <path d="M2 12h2" />
+                  <path d="M20 12h2" />
+                  <path d="m6.34 17.66-1.41 1.41" />
+                  <path d="m19.07 4.93-1.41 1.41" />
                 </svg>
                 <svg class="theme-icon moon-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M21 12.5A9 9 0 0 1 11.5 3 7.5 7.5 0 1 0 21 12.5Z" />
+                  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
                 </svg>
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="top-grid secondary-grid">
+        <article class="card goal-card" id="goalPlannerCard">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Goal</p>
+              <h2>Grade Goal Planner</h2>
+            </div>
+            <div class="planner-toggle">
+              <span class="mode-label" id="plannerModeLabel">Target GPA Mode</span>
+              <button type="button" id="plannerModeToggle" class="pill pill-soft" style="user-select: auto;">Switch</button>
+            </div>
+          </div>
+          <div class="planner-body">
+            <div class="planner-panel" id="targetModePanel">
+              <div class="planner-stats">
+                <div class="metric">
+                  <p class="label">Current GPA</p>
+                  <p class="value" id="plannerCurrentGpa">--</p>
+                </div>
+                <div class="metric">
+                  <p class="label">Completed Credits</p>
+                  <p class="value" id="plannerCompletedCredits">--</p>
+                </div>
+              </div>
+
+              <div class="planner-input-group">
+                <label class="field-label" for="targetGpaInput">Target GPA after this semester</label>
+                <div class="planner-input-row">
+                  <input type="number" step="0.01" min="0" max="4" id="targetGpaInput" placeholder="e.g. 3.75" />
+                  <button type="button" id="calculatePlanBtn" class="primary-btn">Calculate</button>
+                </div>
+              </div>
+
+              <div class="planner-result hidden" id="plannerResult">
+                <p class="result-lead" id="plannerSummary"></p>
+                <div class="result-lines" id="plannerMix"></div>
+              </div>
+            </div>
+
+            <div class="planner-panel hidden" id="expectedModePanel">
+              <p class="result-lead">Select your expected grades for this semester.</p>
+              <div class="expected-courses" id="expectedCoursesList"></div>
+              <div class="expected-actions">
+                <button type="button" id="expectedCalcBtn" class="primary-btn" disabled>Calculate Predicted GPA</button>
+                <div class="expected-summary">
+                  <p class="result-lead" id="expectedSummary"></p>
+                  <p class="note" id="expectedSubtext">&nbsp;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="note planner-note">*This is an estimate. Actual GPA depends on university rules.</p>
+        </article>
+
+        <article class="card degree-card" id="degreeSummaryCard">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Degree Plan</p>
+              <h2>Degree Progress Summary</h2>
+            </div>
+          </div>
+          <div class="degree-body">
+            <div class="degree-stats">
+              <div class="stat-chip">
+                <p class="label">Main / Major Courses Remaining</p>
+                <p class="value" id="majorRemainingValue">--</p>
+              </div>
+              <div class="stat-chip">
+                <p class="label">GE Courses Remaining</p>
+                <p class="value" id="geRemainingValue">--</p>
+              </div>
+              <div class="stat-chip">
+                <p class="label">Free Electives Remaining</p>
+                <p class="value" id="electivesRemainingValue">--</p>
+              </div>
+              <div class="stat-chip highlight-chip">
+                <p class="label">Total Courses Remaining</p>
+                <p class="value" id="totalRemainingValue">--</p>
+              </div>
+              <div class="stat-chip">
+                <p class="label">Internship Credits</p>
+                <p class="value" id="internshipCreditValue">5</p>
+              </div>
+            </div>
+
+            <div class="degree-breakdown">
+              <div class="degree-row">
+                <div class="degree-row-header">
+                  <span>Major Courses</span>
+                  <span class="muted" id="majorProgressText">--</span>
+                </div>
+                <div class="degree-bar">
+                  <div class="degree-bar-fill" id="majorProgressBar"></div>
+                </div>
+              </div>
+              <div class="degree-row">
+                <div class="degree-row-header">
+                  <span>General Education</span>
+                  <span class="muted" id="geProgressText">--</span>
+                </div>
+                <div class="degree-bar">
+                  <div class="degree-bar-fill" id="geProgressBar"></div>
+                </div>
+              </div>
+              <div class="degree-row">
+                <div class="degree-row-header">
+                  <span>Electives</span>
+                  <span class="muted" id="electivesProgressText">--</span>
+                </div>
+                <div class="degree-bar">
+                  <div class="degree-bar-fill" id="electivesProgressBar"></div>
+                </div>
+              </div>
+            </div>
+            <p class="note">Values are placeholders. Total credits target is 129, with 5 credits reserved for internship.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="top-grid tertiary-grid">
+        <article class="card map-card">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Campus</p>
+              <h2>3D Campus Map</h2>
+            </div>
+          </div>
+          <div class="map-viewport">
+            <model-viewer
+              id="campusViewer"
+              src="prototype.glb"
+              alt="Siam University campus prototype"
+              camera-controls
+              auto-rotate
+              touch-action="pan-y"
+              shadow-intensity="0.6"
+              exposure="1.1"
+              ar
+              ar-modes="scene-viewer webxr quick-look"
+              disable-tap
+              interaction-prompt="none"
+            ></model-viewer>
+          </div>
+          <p class="map-support hidden" id="mapSupportMsg">If the viewer is blank, your browser may need WebGL 2 or a recent Chromium/Firefox build.</p>
+          <noscript>
+            <div class="map-placeholder-box">
+              <p class="map-title">Enable JavaScript to view the 3D map.</p>
+              <p class="map-subtitle">You can also download the model directly: <a href="prototype.glb" download>prototype.glb</a></p>
+            </div>
+          </noscript>
+        </article>
+
+        <article class="card attendance-card">
+          <div class="card-header">
+            <div>
+              <p class="eyebrow">Attendance</p>
+              <h2>Class Check-in</h2>
+            </div>
+          </div>
+          <div class="attendance-body">
+            <div class="attendance-status" id="attendanceStatus">
+              <span class="status-dot" id="attendanceStatusDot"></span>
+              <div class="status-texts">
+                <span id="attendanceStatusText">Attendance not taken</span>
+                <small id="attendanceSubtext">Tap the button below and hold your RFID card near the device.</small>
+              </div>
+            </div>
+
+            <div class="session-code-input">
+              <input
+                id="session-token-input"
+                type="text"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                maxlength="5"
+                class="session-code-field"
+                placeholder="Enter session code"
+              />
+            </div>
+
+            <div class="attendance-actions">
+              <button type="button" id="attendanceToggleBtn" class="primary-btn center-btn" onclick="giveAttendance()">
+                <span id="attendanceBtnSpinner" class="spinner hidden" aria-hidden="true"></span>
+                <span id="attendanceBtnLabel">Give Attendance</span>
               </button>
             </div>
           </div>
@@ -113,6 +343,9 @@
             <p class="eyebrow">Courses</p>
             <h2>Course List</h2>
           </div>
+          <button type="button" id="courseGroupToggle" class="pill pill-soft" style="user-select: auto;">Group by Code</button>
+        </div>
+        <div class="course-filters">
           <div class="search">
             <input type="search" id="courseSearch" placeholder="Search by code or name" aria-label="Search courses" />
           </div>
@@ -123,8 +356,8 @@
               <tr>
                 <th>Code</th>
                 <th>Course</th>
-                <th>Term</th>
-                                <th>Grade / Status</th>
+                <th class="term-col">Term</th>
+                <th>Grade</th>
               </tr>
             </thead>
             <tbody id="courseList"></tbody>
@@ -140,12 +373,15 @@
         <p id="errorMessage">Please check your connection or ensure schedule.json is present.</p>
       </section>
     </main>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+      <div class="mobile-menu-sheet" id="mobileMenuSheet">
+        <p class="menu-title">Menu</p>
+        <button type="button" class="mobile-logout" id="mobileLogoutBtn">Logout</button>
+      </div>
+    </div>
   </div>
 
-  <script src="schedule-data.js"></script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
-
-
-
